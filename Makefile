@@ -5,7 +5,7 @@ genDiff:
 	node bin/genDiff.js
 
 test:
-	npm test
+	npx -n --experimental-vm-modules jest
 
 test-watch:
 	npm test-watch
