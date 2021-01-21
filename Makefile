@@ -7,6 +7,9 @@ genDiff:
 test:
 	npm test
 
+test-watch:
+	npm test-watch
+
 lint:
 	npx eslint .
 
