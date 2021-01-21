@@ -4,34 +4,31 @@ import path from 'path';
 
 const program = new Command();
 
-const generateDiff = (file1, file2) => {
+export const generateDiff = (file1, file2) => {
   const mergeFiles = { ...file1, ...file2 };
   const sortedFile = Object.entries(mergeFiles).sort();
+  const keysFile1 = Object.keys(file1);
+  const keysFile2 = Object.keys(file2);
 
   const res = sortedFile.reduce((acc, [key, val]) => {
-    if (key in file2 && key in file1) {
+    if (keysFile2.includes(key) && keysFile1.includes(key)) {
       if (file1[key] === file2[key]) {
-        return `${acc}
-        ${key}: ${val}`;
+        return `${acc}\n    ${key}: ${val}`;
       }
     }
 
-    if (key in file2 && !(key in file1)) {
-      return `${acc}
-      + ${key}: ${file2[key]}`;
+    if (keysFile2.includes(key) && !(keysFile1.includes(key))) {
+      return `${acc}\n  + ${key}: ${file2[key]}`;
     }
 
-    if (key in file1 && !(key in file2)) {
-      return `${acc}
-      - ${key}: ${file1[key]}`;
+    if (keysFile1.includes(key) && !(keysFile2.includes(key))) {
+      return `${acc}\n  - ${key}: ${file1[key]}`;
     }
 
-    return `${acc}
-      - ${key}: ${file1[key]}
-      + ${key}: ${file2[key]}`;
+    return `${acc}\n  - ${key}: ${file1[key]}\n  + ${key}: ${file2[key]}`;
   }, '');
 
-  return res;
+  return `{${res}\n}`;
 };
 
 export default () => {
@@ -47,7 +44,7 @@ export default () => {
       const file2 = fs.readFileSync(resolvPath2, 'utf-8');
       const parseFile1 = JSON.parse(file1);
       const parseFile2 = JSON.parse(file2);
-      console.log(generateDiff(parseFile1, parseFile2));
+      generateDiff(parseFile1, parseFile2);
     });
 
   program.parse(process.argv);

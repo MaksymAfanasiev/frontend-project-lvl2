@@ -7,7 +7,7 @@
     "genDiff": "bin/genDiff.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx -n --experimental-vm-modules jest --watch"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,10 @@
     "url": "https://github.com/MaksymAfanasiev/frontend-project-lvl2/issues"
   },
   "type": "module",
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {}
+  },
   "homepage": "https://github.com/MaksymAfanasiev/frontend-project-lvl2#readme",
   "dependencies": {
     "commander": "^6.2.1"
@@ -26,6 +30,9 @@
   "devDependencies": {
     "eslint": "^7.16.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.22.1"
+    "eslint-plugin-import": "^2.22.1",
+    "@jest/globals": "^26.6.2",
+    "jest": "^26.6.3",
+    "jest-cli": "^26.6.3"
   }
 }
