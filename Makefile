@@ -5,10 +5,10 @@ genDiff:
 	node bin/genDiff.js
 
 test:
-	npx -n --experimental-vm-modules jest
+	npx -n --experimental-vm-modules jest --watch
 
-test-watch:
-	npm test-watch
+test-coverage:
+	npm test -- --coverage --coverageProvider=v
 
 lint:
 	npx eslint .
