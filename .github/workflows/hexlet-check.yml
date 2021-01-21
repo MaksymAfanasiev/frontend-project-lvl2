@@ -25,3 +25,17 @@ jobs:
         uses: hexlet/project-action@release
         with:
           hexlet-id: ${{ secrets.HEXLET_ID }}
+
+      - name: npm install
+        run: |
+          make install
+        env:
+          CI: true
+
+      - name: Run linter
+        run: |
+          make lint
+
+      - name: Run tests
+        run: /
+          make test
