@@ -1,10 +1,12 @@
 import { Command } from 'commander';
 import fs from 'fs';
 import path from 'path';
+import getParcer from './parsers.js';
 
 const program = new Command();
 
 export const generateDiff = (file1, file2) => {
+  console.log(file1, file2);
   const mergeFiles = { ...file1, ...file2 };
   const sortedFile = Object.entries(mergeFiles).sort();
   const keysFile1 = Object.keys(file1);
@@ -42,9 +44,7 @@ export default () => {
       const resolvPath2 = path.resolve(process.cwd(), src2);
       const file1 = fs.readFileSync(resolvPath1, 'utf-8');
       const file2 = fs.readFileSync(resolvPath2, 'utf-8');
-      const parseFile1 = JSON.parse(file1);
-      const parseFile2 = JSON.parse(file2);
-      generateDiff(parseFile1, parseFile2);
+      console.log(generateDiff(getParcer(file1), getParcer(file2)));
     });
 
   program.parse(process.argv);

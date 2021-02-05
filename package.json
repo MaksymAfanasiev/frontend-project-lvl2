@@ -28,7 +28,8 @@
   },
   "homepage": "https://github.com/MaksymAfanasiev/frontend-project-lvl2#readme",
   "dependencies": {
-    "commander": "^6.2.1"
+    "commander": "^6.2.1",
+    "js-yaml": "^4.0.0"
   },
   "devDependencies": {
     "eslint": "^7.16.0",
