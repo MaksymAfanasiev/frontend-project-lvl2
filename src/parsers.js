@@ -3,15 +3,12 @@ import path from 'path';
 
 const getParcer = (file) => {
   const format = path.extname(file);
-  let parser;
 
   if (format === '.json') {
-    parser = JSON.parse;
-  } else if (format === '.yml') {
-    parser = yaml.load;
+    return JSON.parse;
   }
 
-  return parser;
+  return yaml.load;
 };
 
 export default (file, data) => {
