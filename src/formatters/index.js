@@ -1,6 +1,8 @@
 import stylish from './stylish.js';
+import plain from './plain.js';
 
 const formaters = {
+  plain,
   json: JSON.stringify,
   stylish,
 };
