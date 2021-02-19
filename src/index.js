@@ -1,50 +1,22 @@
-import { Command } from 'commander';
 import fs from 'fs';
 import path from 'path';
-import getParcer from './parsers.js';
+import parse from './parsers.js';
+import buildAst from './buildAst.js';
+import format from './formatters/index.js';
 
-const program = new Command();
+const getFullPath = (pathString) => path.resolve(process.cwd(), pathString);
 
-export const generateDiff = (file1, file2) => {
-  const mergeFiles = { ...file1, ...file2 };
-  const sortedFile = Object.entries(mergeFiles).sort();
-  const keysFile1 = Object.keys(file1);
-  const keysFile2 = Object.keys(file2);
-
-  const res = sortedFile.reduce((acc, [key, val]) => {
-    if (keysFile2.includes(key) && keysFile1.includes(key)) {
-      if (file1[key] === file2[key]) {
-        return `${acc}\n    ${key}: ${val}`;
-      }
-    }
-
-    if (keysFile2.includes(key) && !(keysFile1.includes(key))) {
-      return `${acc}\n  + ${key}: ${file2[key]}`;
-    }
-
-    if (keysFile1.includes(key) && !(keysFile2.includes(key))) {
-      return `${acc}\n  - ${key}: ${file1[key]}`;
-    }
-
-    return `${acc}\n  - ${key}: ${file1[key]}\n  + ${key}: ${file2[key]}`;
-  }, '');
-
-  return `{${res}\n}`;
+export const getData = (pathString) => {
+  const data = fs.readFileSync(getFullPath(pathString), 'utf8');
+  return parse(pathString, data);
 };
 
-export default () => {
-  program
-    .version('0.1.0')
-    .arguments('<filepath1> <filepath2>')
-    .description('Compares two configuration files and shows a difference.')
-    .option('-f, --format [type]', 'output format')
-    .action((src1, src2) => {
-      const resolvPath1 = path.resolve(process.cwd(), src1);
-      const resolvPath2 = path.resolve(process.cwd(), src2);
-      const file1 = fs.readFileSync(resolvPath1, 'utf-8');
-      const file2 = fs.readFileSync(resolvPath2, 'utf-8');
-      console.log(generateDiff(getParcer(resolvPath1)(file1), getParcer(resolvPath2)(file2)));
-    });
+const genDiff = (path1, path2, formateType) => {
+  const data1 = getData(path1);
+  const data2 = getData(path2);
 
-  program.parse(process.argv);
+  const ast = buildAst(data1, data2);
+  return format(formateType, ast);
 };
+
+export default genDiff;

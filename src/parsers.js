@@ -14,4 +14,8 @@ const getParcer = (file) => {
   return parser;
 };
 
-export default getParcer;
+export default (file, data) => {
+  const parser = getParcer(file);
+
+  return parser(data);
+};
