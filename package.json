@@ -4,7 +4,7 @@
   "description": "[![Actions Status](https://github.com/MaksymAfanasiev/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/MaksymAfanasiev/frontend-project-lvl2/actions)",
   "main": "index.js",
   "bin": {
-    "genDiff": "bin/genDiff.js"
+    "gendiff": "bin/genDiff.js"
   },
   "engines": {
     "node": ">=14"
