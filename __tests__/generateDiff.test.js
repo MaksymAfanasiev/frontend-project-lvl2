@@ -12,6 +12,7 @@ const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8'
 
 const expectedStylish = readFile('expectedStylish.txt');
 const expectedPlain = readFile('expectedPlain.txt');
+const expectedJSON = readFile('expectedJSON.json');
 
 test('generateDiff JSON files stylish format', () => {
   expect(generateDiff(getFixturePath('file1.json'), getFixturePath('file2.json'), 'stylish')).toBe(expectedStylish);
@@ -27,4 +28,12 @@ test('generateDiff JSON files plain format', () => {
 
 test('generateDiff YAML files plain format', () => {
   expect(generateDiff(getFixturePath('file1.yml'), getFixturePath('file2.yml'), 'plain')).toBe(expectedPlain);
+});
+
+test('generateDiff JSON files JSON format', () => {
+  expect(generateDiff(getFixturePath('file1.json'), getFixturePath('file2.json'), 'json')).toBe(expectedJSON);
+});
+
+test('generateDiff YAML files JSON format', () => {
+  expect(generateDiff(getFixturePath('file1.yml'), getFixturePath('file2.yml'), 'json')).toBe(expectedJSON);
 });
