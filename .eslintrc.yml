@@ -3,6 +3,7 @@
 env:
   node: true
   es2020: true
+  jest/globals: true
 
 extends:
   - 'airbnb-base'
